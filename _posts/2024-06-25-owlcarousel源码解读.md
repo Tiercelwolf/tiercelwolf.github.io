@@ -1,12 +1,12 @@
 
-#owl carousel源码分析
+# owl carousel源码分析
 
 
-##1.总体功能介绍
+## 1.总体功能介绍
 
 整体是对stage中item的css操作来实现animation，transform，transisition的动画效果，item中可存放image或者video。支持用户通过鼠标操作或者touch操作。
 
-##2.初始化过程
+## 2.初始化过程
 在页面中调用owlCarousel开始整个插件的初始化过程。
 		
 		```
@@ -27,7 +27,8 @@
 	其中elem为选中节点，type为方法名称。type中不包含namespace信息。
 -- 被选择element绑定'next', 'prev', 'to', 'destroy', 'refresh', 'replace', 'add', 'remove'事件处理。这些事件触发时e.relatedTarget是owl实例时，不会被处理。只能是其他触发方式才会被处理。
 
-###1.owl
+### 1.owl
+
 owl实例初始化，具体包括：
 
 --将用户定义的css属性与缺省的css属性整合保存到this.options.将选中的element保存到this.$element.
@@ -40,35 +41,36 @@ owl实例初始化，具体包括：
 
 -owl初始化过程中，会触发change，changed, initialize, initialized，translate, translated, refresh, refreshed事件，插件组件会处理这些事件.
 
-###2.AutoRefresh
+### 2.AutoRefresh
+
 设置this._core为owl实例，整合css信息，注册initialized事件。事件处理方法是watch方法，watch设定刷新间隔调用refresh。可能调用owl的refresh。
 
-###3.Lazy
+### 3.Lazy
 设置this._core为owl实例，整合css信息，注册initialized.owl.carousel change.owl.carousel resized.owl.carousel三个事件。
 
-###4.AutoHeight
+### 4.AutoHeight
 设置事件和处理函数，事件包括：initialized, changed,loaded. 这两个事件load, resize是直接设置在window上。这些事件的处理都会调用其中的update方法。update方法设置stage上层节点的高度为所有可见item高度的最大值。
 
-###5.Video
+### 5.Video
 绑定initialized, resize, refreshed, changed, prepared事件处理，.owl-video-play-icon节点的click事件，用户点击icon后，在iframe中添加src属性，浏览器完成下载显示。相应的fetch,thumbnail,stop基本用不上。
 
-###6.animate
+### 6.animate
 绑定change，drag，dragged，translated，translate事件处理，animate插件负责对应item的class设置。与animate配合的是在owl中animate方法会在总的被选节点设置transform和transition相关参数。
 
-###7.autoplay
+### 7.autoplay
 绑定changed，initialized，play，stop，mouseover，mouseleave，touchstart，touchend事件。调用play，stop，pause方法，实际上对item的位置和定时刷新时间的设置。
 
-###8.navigation
+### 8.navigation
 绑定prepared，added，remove，changed，initialized，refreshed事件，调用update，draw等方法实际是对dot进行定位操作。
 
-###9.hash
+### 9.hash
 绑定initialized，prepared，changed，hashchanged事件，实际操作item位置信息。
 
-###10.support
+### 10.support
 对浏览器是否支持transition，animation，transform进行测试。并记录在support上。
 
-##3.插件配置
+## 3.插件配置
 插件参数的配置可参考每个参数的意义进行设置。
 
-##4.插件开发方法
+## 4.插件开发方法
 owl的开发方式主要是采用IIFE模式，同时使用原型链将主题方法和插件方法关联起来。主体OWL的方法主要对stage和item进行操作，插件对每个item进行具体操作。整个操作会设置state标志，防止重复操作。主体owl和每个插件都有destroy方法，防止内存泄漏。

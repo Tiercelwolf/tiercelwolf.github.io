@@ -10,7 +10,8 @@
   extends: ['react-app'],
   // other configurations...
   };
-  ```<br>
+  ```
+  <br>
   在package.json增加：<br>
   ```
   {
@@ -20,7 +21,8 @@
     ]
   }
   }
-  ```<br>
+  ```
+  <br>
   删除package.json中原有的包依赖的eslint信息。
   
   
